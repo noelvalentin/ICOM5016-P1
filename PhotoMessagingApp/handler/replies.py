@@ -128,7 +128,7 @@ class ReplyHandler:
 
     def updateReply(self, rid):
         dao = RepliesDAO()
-        if not dao.getMessageById(rid):
+        if not dao.getReplyById(rid):
             return jsonify(Error = "Reply Not Found"), 404
         result = dao.updateReply(rid)
         return result
