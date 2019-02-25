@@ -111,19 +111,19 @@ class UserHandler:
 
     def createUser(self):
         dao = UsersDAO()
-        result = dao.insert(firstName, lastName, phone, email, password)
+        result = dao.createUser(firstName, lastName, phone, email, password)
         return result
 
     def deleteUser(self, uid):
         dao = UsersDAO()
         if not dao.getUserById(uid):
             return jsonify(Error = "User Not Found"), 404
-        result = dao.delete(uid)
+        result = dao.deleteUser(uid)
         return result
 
     def updateUser(self, uid):
         dao = UsersDAO()
         if not dao.getUserById(uid):
             return jsonify(Error = "User Not Found"), 404
-        result = dao.update(uid)
+        result = dao.updateUser(uid)
         return result
