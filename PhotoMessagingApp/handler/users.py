@@ -114,7 +114,7 @@ class UserHandler:
         result = dao.insert(firstName, lastName, phone, email, password)
         return result
 
-    def deleteUser(self):
+    def deleteUser(self, uid):
         dao = PartsDAO()
         result = dao.delete(uid)
         return result
