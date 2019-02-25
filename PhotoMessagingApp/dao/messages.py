@@ -30,10 +30,10 @@ class MessagesDAO:
 
     def getMessagesByDate(self, date):
         vacio = []
-        if date == "14/feb/2019":
+        if date == "14-feb-2019":
             result = [[10, 20, 140, "14/feb/2019", "cool message", "cool photo"],
                       [20, 20, 490, "14/feb/2019", "great message", "great photo"]]
-        elif date == "18/feb/2040":
+        elif date == "18-feb-2040":
             result = [[11, 21, 1412, "18/feb/2040", "cool message", "cool photo"],
                       [243, 25, 429, "18/feb/2040", "great message", "great photo"]]
         else:
@@ -58,10 +58,10 @@ class MessagesDAO:
 
     def getMessagesPerDayByUser(self, posterid, date):
         vacio = []
-        if posterid == 25 & date == "14/feb/2019":
+        if posterid == 25 & date == "14-feb-2019":
             result = [[10, 20, 25, "14/feb/2019", "cool message", "cool photo"],
                       [20, 20, 25, "14/feb/2019", "great message", "great photo"]]
-        elif posterid == 190 & date == "18/feb/2040":
+        elif posterid == 190 & date == "18-feb-2040":
             result = [[11, 21, 190, "18/feb/2040", "cool message", "cool photo"],
                       [243, 25, 190, "18/feb/2040", "great message", "great photo"]]
         else:
