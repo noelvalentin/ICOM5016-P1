@@ -111,7 +111,7 @@ class UserHandler:
 
     def createUser(self):
         dao = UsersDAO()
-        result = dao.createUser(firstName, lastName, phone, email, password)
+        result = dao.createUser()
         return result
 
     def deleteUser(self, uid):
