@@ -108,3 +108,18 @@ class UserHandler:
             result = self.build_user_contact_dict(row)
             result_list.append(result)
         return jsonify(Contacts = result_list)
+
+    def createUser(self):
+        dao = PartsDAO()
+        result = dao.insert(firstName, lastName, phone, email, password)
+        return result
+
+    def deleteUser(self):
+        dao = PartsDAO()
+        result = dao.delete(uid)
+        return result
+
+    def updateUser(self, uid):
+        dao = PartsDAO()
+        result = dao.update(uid)
+        return result
