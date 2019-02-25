@@ -1,5 +1,9 @@
 from flask import Flask, jsonify, request
 from handler.users import UserHandler
+from handler.groups import GroupHandler
+from handler.messages import MessageHandler
+from handler.replies import ReplyHandler
+
 # Import Cross-Origin Resource Sharing to enable
 # services on other ports on this machine or on other
 # machines to access this app
@@ -14,9 +18,251 @@ CORS(app)
 def greeting():
     return 'Hello, this is the Photo Messaging DB App!'
 
-@app.route('/PhotoMessagingApp/users', methods=['GET', 'POST'])
+
+
+
+#############
+#           #
+#   USERS   #
+#           #
+#############
+
+@app.route('/PhotoMessagingApp/users', methods=['GET'])
 def getAllUsers():
-    return UserHandler().getAllUsers()
+        return UserHandler().getAllUsers()
+
+
+@app.route('/PhotoMessagingApp/users/<int:uid>', methods=['GET','DELETE','PUT'])
+def getUserbyId(uid):
+    if request.method == 'GET':
+     return UserHandler().getUserById(uid)
+    elif request.method=='DELETE':
+     return UserHandler().deleteUser(uid)
+    elif request.method=='PUT' :
+     return UserHandler().updateUser(uid)
+    else:
+        return "Nothing"
+
+@app.route('/PhotoMessagingApp/signup')
+def createUser():
+        return UserHandler().createUser()
+
+@app.route('/PhotoMessagingApp/users/<int:id>/contacts', methods=['GET'])
+def getAllUsersContacts(id):
+
+        return UserHandler().getUserContactsById(id)
+
+
+@app.route('/PhotoMessagingApp/users/firstName/<string:fName>', methods=['GET'])
+def getUserByFirstName(fName):
+     return UserHandler().getUserByFirstName(fName)
+
+
+@app.route('/PhotoMessagingApp/users/lastName/<string:lName>', methods=['GET'])
+def getUserByLastName(lName):
+     return UserHandler().getUserByLastName(lName)
+
+@app.route('/PhotoMessagingApp/users/phone/<int:phone>', methods=['GET'])
+def getUserByPhone(phone):
+     return UserHandler().getUserByPhone(phone)
+
+
+@app.route('/PhotoMessagingApp/users/email/<string:email>')
+def getUserByEmail(email):
+            return UserHandler().getUserByEmail(email)
+
+
+
+#############
+#           #
+#   GROUPS  #
+#           #
+#############
+
+
+
+
+
+@app.route('/PhotoMessagingApp/groups')
+def getAllGroups():
+        return GroupHandler().getAllGroups()
+
+
+
+
+@app.route('/PhotoMessagingApp/groups/<int:id>',methods=['GET','DELETE','PUT'])
+def getGroupByID(id):
+    if request.method== 'GET':
+        return GroupHandler().getGroupById(id)
+    elif request.method=='DELETE':
+        return GroupHandler().deleteGroup(id)
+    elif request.method=='PUT':
+        return GroupHandler().updateGroup(id)
+    else:
+        return 200
+
+@app.route('/PhotoMessagingApp/groups/<string:gname>')
+def getGroupByGroupName(gname):
+        return GroupHandler().getGroupByGroupName(gname)
+
+
+
+@app.route('/PhotoMessagingApp/groups/owner/<int:id>')
+def getAllGroupsByOwnerID(id):
+        return GroupHandler().getAllGroupsByOwnerID(id)
+
+
+@app.route('/PhotoMessagingApp/groups/<int:id>/members')
+def getGroupMembers(id):
+        return GroupHandler().getGroupMembers(id)
+
+
+
+#############
+#           #
+#  MESSAGES #
+#           #
+#############
+@app.route('/PhotoMessagingApp/messages')
+def getAllMessages():
+        return MessageHandler().getAllMessages()
+
+
+@app.route('/PhotoMessagingApp/messages/user/<int:id>')
+def getAllMessagesByUser(id):
+    return MessageHandler().getAllMessagesByUser(id)
+
+@app.route('/PhotoMessagingApp/messages/<int:id>',methods=['GET','DELETE','PUT'])
+def getMessageById(id):
+    if request.method=='GET':
+        return MessageHandler().getMessageById(id)
+    elif request.method== 'DELETE':
+        return MessageHandler().deleteMessage(id)
+    elif request.method=='PUT':
+        return MessageHandler().updateMessage(id)
+
+
+@app.route('/PhotoMessagingApp/messages/date/<string:date>')
+def getMessagesByDate(date):
+    return MessageHandler().getMessagesByDate(date)
+
+@app.route('/PhotoMessagingApp/messages/chat/<int:id>')
+def getMessagesByGroupChat(id):
+    return MessageHandler().getMessagesByGroupChat(id)
+
+@app.route('/PhotoMessagingApp/messages/trending')
+def getTrendingTopics():
+    return MessageHandler().getTrendingTopics()
+
+@app.route('/PhotoMessagingApp/messages/user/<int:posterid>/<string:date>')
+def getMessagesPerDayByUser(posterid,date):
+    return MessageHandler().getMessagesPerDayByUser(posterid,date)
+
+@app.route('/PhotoMessagingApp/messages/user/activeusers')
+def getActiveUsers():
+    return MessageHandler().getActiveUsers()
+
+
+#############
+#           #
+# REPLIES   #
+#           #
+#############
+@app.route('/PhotoMessagingApp/messages/replies')
+def getAllReplies():
+    return ReplyHandler().getAllReplies()
+
+@app.route('/PhotoMessagingApp/messages/replies/user/<int:id>')
+def getAllRepliesByUser(id):
+    return ReplyHandler().getAllRepliesByUser(id)
+
+@app.route('/PhotoMessagingApp/messages/replies/<int:rid>',methods=['GET','PUT','DELETE'])
+def getReplyById(rid):
+    if request.method=='GET':
+     return ReplyHandler().getReplyById(rid)
+    elif request.method=='DELETE':
+        return ReplyHandler().deleteReply(rid)
+    elif request.method=='PUT':
+        return ReplyHandler().updateReply(rid)
+
+@app.route('/PhotoMessagingApp/messages/replies/date/<string:date>')
+def getRepliesByDate(date):
+    return ReplyHandler().getRepliesByDate(date)
+
+@app.route('/PhotoMessagingApp/messages/replies/post/<int:pid>')
+def getRepliesOfPost(pid):
+    return ReplyHandler().getRepliesOfPost(pid)
+
+
+@app.route('/PhotoMessagingApp/messages/replies/<int:uid>/<string:date>')
+def getRepliesPerDayByUser(uid,date):
+    return ReplyHandler().getRepliesPerDayByUser(uid,date)
+
+
+@app.route('/PhotoMessagingApp/messages/create/replies')
+def createReply():
+    return ReplyHandler().createReply()
+
+#############
+#           #
+# LIKES     #
+#           #
+#############
+
+@app.route('/PhotoMessagingApp/messages/likes/<int:postid>')
+def getLikesOfPost(postid):
+    return ReplyHandler().getLikesOfPost(postid)
+
+@app.route('/PhotoMessagingApp/messages/post/likes/<int:lid>',methods=['GET','PUT','DELETE'])
+def getLikeById(lid):
+    if request.method=='GET':
+        return ReplyHandler().getLikeById(lid)
+    elif request.method=='PUT':
+        return ReplyHandler().updateLike(lid)
+    elif request.method=='DELETE':
+        return ReplyHandler().deleteLike(lid)
+
+@app.route('/PhotoMessagingApp/messages/post/clike')
+def createLike():
+    return ReplyHandler().createLike()
+
+@app.route('/PhotoMessagingApp/messages/post/likes/<string:date>')
+def getLikesPerDay(date):
+        return ReplyHandler().getLikesPerDay(date)
+
+
+#############
+#           #
+# DISLIKES  #
+#           #
+#############
+
+
+@app.route('/PhotoMessagingApp/messages/dislikes/<int:postid>')
+def getDislikesOfPost(postid):
+    return ReplyHandler().getDislikesOfPost(postid)
+
+@app.route('/PhotoMessagingApp/messages/post/dislikes/<int:lid>',methods=['GET','PUT','DELETE'])
+def getDislikeById(lid):
+    if request.method=='GET':
+        return ReplyHandler().getDislikeById(lid)
+    elif request.method=='PUT':
+        return ReplyHandler().updateDislike(lid)
+    elif request.method=='DELETE':
+        return ReplyHandler().deleteDislike(lid)
+
+@app.route('/PhotoMessagingApp/messages/post/cdislike')
+def createDislike():
+    return ReplyHandler().createDislike()
+
+@app.route('/PhotoMessagingApp/messages/post/dislikes/<string:date>')
+def getDislikesPerDay(date):
+        return ReplyHandler().getDislikesPerDay(date)
+
+
+
+
+
 
 if __name__ == '__main__':
     app.run()
