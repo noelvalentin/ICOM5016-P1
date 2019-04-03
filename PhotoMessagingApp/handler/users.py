@@ -9,7 +9,7 @@ class UserHandler:
         result['lastName'] = row[2]
         result['phone'] = row[3]
         result['email'] = row[4]
-        result['password'] = row[5]
+       # result['password'] = row[5]
         return result
 
     def build_user_contact_dict(self, row):
@@ -112,6 +112,11 @@ class UserHandler:
     def createUser(self):
         dao = UsersDAO()
         result = dao.createUser()
+        return result
+
+    def userLogin(self):
+        dao=UsersDAO()
+        result = dao.login()
         return result
 
     def deleteUser(self, uid):
