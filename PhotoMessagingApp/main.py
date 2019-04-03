@@ -14,11 +14,10 @@ app = Flask(__name__)
 # Apply CORS to this app
 CORS(app)
 
-@app.route('/')
+
+@app.route('/PhotoMessagingApp',methods=['GET'])
 def greeting():
     return 'Hello, this is the Photo Messaging DB App!'
-
-
 
 
 #############
